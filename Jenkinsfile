@@ -1,6 +1,4 @@
 pipeline {
-    agent any
-    
     environment {
         IMAGE_NAME = "staticwebapp"
         IMAGE_TAG = "latest"
