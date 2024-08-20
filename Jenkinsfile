@@ -93,19 +93,4 @@ pipeline {
                }
             }
         }
-        
-    post {
-        always {
-            // Ce bloc sera exécuté, peu importe si le pipeline réussit ou échoue
-            echo 'Pipeline terminé'
-        }
-        success {
-            // Ce bloc est exécuté si le pipeline réussit
-            echo 'Pipeline réussi'
-        }
-        failure {
-            // Ce bloc est exécuté si le pipeline échoue
-            echo 'Pipeline échoué'
-        }
-    }
 }
