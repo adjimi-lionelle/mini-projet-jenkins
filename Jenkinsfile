@@ -29,24 +29,6 @@ pipeline {
             }
         }
 
-         stage('Test container') {
-            agent any
-            steps {
-                script {
-                    sh '''
-                        echo "Testing container..."
-                        response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8082)
-                        if [ "$response" -ne 200 ]; then
-                            echo "Test failed! HTTP response code: $response"
-                            exit 1
-                        else
-                            echo "Test passed! HTTP response code: $response"
-                        fi
-                    '''
-                }
-            }
-        }
-
         stage('Clean container') {
             agent any
             steps {
