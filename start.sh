@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if [ -z "$LISTEN_PORT" ]; then
-  LISTEN_PORT=$PORT
+  PORT=80
 fi
-sed -i "s/LISTEN_PORT/${LISTEN_PORT}/g" /etc/nginx/nginx.conf
+sed -i "s/LISTEN_PORT/${PORT}/g" /etc/nginx/nginx.conf
 nginx -g 'daemon off;'
