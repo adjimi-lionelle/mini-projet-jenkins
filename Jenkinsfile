@@ -22,8 +22,26 @@ pipeline {
                 script {
                     sh '''
                         echo "Clean Environment"
-                        docker run -e LISTEN_PORT=8082 -d -p 8082:8082 --name $IMAGE_NAME lionie/$IMAGE_NAME:$IMAGE_TAG
+                        docker run -e PORT=8082 -d -p 8082:8082 --name $IMAGE_NAME lionie/$IMAGE_NAME:$IMAGE_TAG
                         sleep 5
+                    '''
+                }
+            }
+        }
+
+        stage('Test container') {
+            agent any
+            steps {
+                script {
+                    sh '''
+                        echo "Testing container..."
+                        response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8082)
+                        if [ "$response" -ne 200 ]; then
+                            echo "Test failed! HTTP response code: $response"
+                            exit 1
+                        else
+                            echo "Test passed! HTTP response code: $response"
+                        fi
                     '''
                 }
             }
