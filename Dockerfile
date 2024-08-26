@@ -4,7 +4,7 @@ FROM nginx:alpine
 COPY . /usr/share/nginx/html
 
 # Définit la variable d'environnement pour le port d'écoute, par défaut 80
-#ENV LISTEN_PORT=80
+ENV LISTEN_PORT=80
 
 # Copie le fichier de configuration Nginx
 COPY nginx.conf /etc/nginx/nginx.conf
