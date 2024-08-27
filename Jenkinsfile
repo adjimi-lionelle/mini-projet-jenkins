@@ -15,7 +15,6 @@ pipeline {
                 }
             }
         }
-}
 
         
         stage('Run container based on builded image') {
