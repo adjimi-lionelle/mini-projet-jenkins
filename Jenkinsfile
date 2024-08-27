@@ -15,6 +15,8 @@ pipeline {
                 }
             }
         }
+}
+
         
         stage('Run container based on builded image') {
             agent any
@@ -22,6 +24,12 @@ pipeline {
                 script {
                     sh '''
                         echo "Clean Environment"
+                        CONTAINER_ID=$(docker ps -aqf "name=$IMAGE_NAME")
+                        if [ ! -z "$CONTAINER_ID" ]; then
+                            echo "Container with name $IMAGE_NAME already exists. Stopping and removing it."
+                            docker stop $CONTAINER_ID || true
+                            docker rm $CONTAINER_ID || true
+                        fi
                         docker run -e PORT=8082 -d -p 8082:8082 --name $IMAGE_NAME lionie/$IMAGE_NAME:$IMAGE_TAG
                         sleep 5
                     '''
@@ -29,7 +37,8 @@ pipeline {
             }
         }
 
-        stage('Clean container') {
+
+       stage('Clean container') {
             agent any
             steps {
                 script {
@@ -38,13 +47,11 @@ pipeline {
                         if [ ! -z "$CONTAINER_ID" ]; then
                             docker stop $CONTAINER_ID || true
                             docker rm $CONTAINER_ID || true
-                         fi
+                        fi  
                     '''
-              }
-           }
-       }
-
-        
+                }
+            }
+        }
 
         stage('Push image in staging and deploy it') {
             when {
