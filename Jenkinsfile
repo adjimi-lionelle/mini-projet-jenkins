@@ -34,12 +34,17 @@ pipeline {
             steps {
                 script {
                     sh '''
-                        docker stop $IMAGE_NAME
-                        docker rm $IMAGE_NAME
+                        CONTAINER_ID=$(docker ps -aqf "name=$IMAGE_NAME")
+                        if [ ! -z "$CONTAINER_ID" ]; then
+                            docker stop $CONTAINER_ID || true
+                            docker rm $CONTAINER_ID || true
+                         fi
                     '''
-                }
-            }
-        }
+              }
+           }
+       }
+
+        
 
         stage('Push image in staging and deploy it') {
             when {
