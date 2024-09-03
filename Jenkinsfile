@@ -17,7 +17,7 @@ pipeline {
         }
 
         
-        stage('Run container based on builded image') {
+        stage('Test: Validate docker image by running container') {
             agent any
             steps {
                 script {
@@ -31,13 +31,16 @@ pipeline {
                         fi
                         docker run -e PORT=8082 -d -p 8082:8082 --name $IMAGE_NAME lionie/$IMAGE_NAME:$IMAGE_TAG
                         sleep 5
+
+                        echo "Testing if the container is running correctly..."
+                        docker ps | grep $IMAGE_NAME
                     '''
                 }
             }
         }
 
 
-       stage('Clean container') {
+       stage('Cleanup docker container') {
             agent any
             steps {
                 script {
@@ -52,7 +55,7 @@ pipeline {
             }
         }
 
-        stage('Push image in staging and deploy it') {
+        stage('Deploy to staging on heroku') {
             when {
                 expression { GIT_BRANCH == 'origin/master' }
             }
@@ -73,7 +76,7 @@ pipeline {
             }
         }
 
-        stage('Push image in production and deploy it') {
+        stage('Deploy to production on heroku') {
             when {
                 expression { GIT_BRANCH == 'origin/master' }
             }

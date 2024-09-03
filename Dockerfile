@@ -1,18 +1,13 @@
 FROM nginx:alpine
 
-# Copie des fichiers du site web
+LABEL maintainer="lionelleadjimi@gmail.com"
+
 COPY app /usr/share/nginx/html
 
-# Définit la variable d'environnement pour le port d'écoute, par défaut 80
-#ENV LISTEN_PORT=80
-
-# Copie le fichier de configuration Nginx
 COPY config/nginx.conf /etc/nginx/nginx.conf
 
-# Créer un script d'entrée pour modifier dynamiquement le port dans le fichier de configuration
 COPY config/start.sh /start.sh
 RUN chmod +x /start.sh
 
-# Utilise le script d'entrée pour démarrer Nginx
 ENTRYPOINT ["/start.sh"]
 
