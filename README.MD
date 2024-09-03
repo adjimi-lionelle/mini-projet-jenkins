@@ -69,7 +69,7 @@ L'étape de staging permet de pousser l'image Docker sur Heroku et la déployer 
  ### II-2 Deploy to production on heroku
  L'étape de staging permet de pousser l'image Docker sur Heroku et la déployer sur l'environnement de staging.
 
-![alt text](app/resultats/image-5.png)
+![alt text](app/resultats/image-6.png)
 
   ------------
 
