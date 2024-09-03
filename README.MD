@@ -1,4 +1,4 @@
-# Mini projet gitlab-CI/CD :Static Website Example
+# Mini projet jenkins :Static Website Example
 
 ![image-1](app/resultats/image-0.png)
 
